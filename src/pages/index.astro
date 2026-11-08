@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import AboutSection from '@/components/sections/AboutSection.astro';
+import ExperienceSection from '@/components/sections/ExperienceSection.astro';
+import ProjectsSection from '@/components/sections/ProjectsSection';
+import TechStackSection from '@/components/sections/TechStackSection.astro';
+import AiJourneySection from '@/components/sections/AiJourneySection.astro';
+import BlogPreviewSection from '@/components/sections/BlogPreviewSection.astro';
+import ContactSection from '@/components/sections/ContactSection';
+import { profile } from '@/data/profile';
+---
+
+<BaseLayout
+  title={`${profile.name} — Software Engineer & AI Engineering Enthusiast`}
+  description={profile.positioning}
+>
+  <HeroSection />
+  <AboutSection />
+  <ExperienceSection />
+  <ProjectsSection client:visible />
+  <TechStackSection />
+  <AiJourneySection />
+  <BlogPreviewSection />
+  <ContactSection client:visible />
+</BaseLayout>

@@ -1,0 +1,104 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Badge from '@/components/ui/Badge.astro';
+import { experiences } from '@/data/experience';
+import { Building2, Calendar, MapPin, CheckCircle2, Sparkles } from 'lucide-react';
+---
+
+<section id="experience" class="py-20 border-t border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-950/40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <SectionHeader
+      eyebrow="Career Timeline"
+      title="Professional Experience"
+      description="Proven experience delivering high-stakes software engineering solutions across Indonesia's major enterprise ecosystems."
+    />
+
+    <div class="relative pl-6 sm:pl-8 border-l border-zinc-200 dark:border-zinc-800 space-y-12">
+      {experiences.map((exp) => (
+        <div class="relative group">
+          <!-- Timeline Node Point -->
+          <div class={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-2 transition-all duration-300 ${
+            exp.isCurrent
+              ? 'bg-blue-600 border-white dark:border-zinc-950 shadow-[0_0_0_4px_rgba(59,130,246,0.3)] animate-pulse'
+              : 'bg-zinc-300 dark:bg-zinc-700 border-white dark:border-zinc-950 group-hover:bg-blue-500'
+          }`}></div>
+
+          <!-- Experience Card -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-white dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 space-y-4">
+            
+            <!-- Header Row -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-zinc-100 dark:border-zinc-800/60">
+              <div>
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <h3 class="text-lg sm:text-xl font-bold text-zinc-950 dark:text-white">
+                    {exp.position}
+                  </h3>
+                  {exp.isCurrent ? (
+                    <Badge variant="production">Current Role</Badge>
+                  ) : (
+                    <Badge variant="neutral">{exp.employmentType}</Badge>
+                  )}
+                </div>
+                <div class="flex items-center gap-2 text-sm font-medium text-blue-600 dark:text-blue-400 mt-1">
+                  <Building2 className="w-4 h-4" />
+                  <span>{exp.company}</span>
+                </div>
+              </div>
+
+              <!-- Period & Location -->
+              <div class="flex flex-col sm:items-end text-xs font-mono text-zinc-500 dark:text-zinc-400 gap-1">
+                <div class="inline-flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>{exp.period}</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>{exp.location}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Business & Architecture Context -->
+            <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              {exp.description}
+            </p>
+
+            <!-- Responsibilities List -->
+            <div class="space-y-2 pt-1">
+              <h4 class="text-xs font-mono uppercase tracking-wider font-semibold text-zinc-700 dark:text-zinc-400">
+                Key Contributions & Architecture:
+              </h4>
+              <ul class="space-y-1.5">
+                {exp.responsibilities.map((resp) => (
+                  <li class="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <span>{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Impact Highlight Note (if any) -->
+            {exp.impactNotes && (
+              <div class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-700/40 flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                <span><strong>Impact:</strong> {exp.impactNotes}</span>
+              </div>
+            )}
+
+            <!-- Tech Stack Tags -->
+            <div class="pt-2 flex flex-wrap items-center gap-1.5">
+              <span class="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 mr-1">Stack:</span>
+              {exp.technologies.map((tech) => (
+                <span class="px-2 py-0.5 rounded-md text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/60">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

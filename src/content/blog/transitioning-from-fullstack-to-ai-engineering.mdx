@@ -1,0 +1,56 @@
+---
+title: "Transitioning from Full Stack Web Engineering to AI Engineering"
+description: "A pragmatic perspective on applying software engineering discipline, systems thinking, and data pipelines to building reliable AI systems."
+publishDate: 2026-08-15
+category: "AI Engineering"
+tags: ["AI Engineering", "PyTorch", "LLM", "Systems Thinking", "Career"]
+readingTime: "6 min read"
+featured: true
+draft: false
+---
+
+The explosion of interest in generative AI and foundation models has generated an overwhelming volume of hype. However, as software engineers who have spent years building and maintaining enterprise systems, we quickly discover a fundamental truth:
+
+> An intelligent model is only as valuable as the reliability, latency, and determinism of the software system wrapped around it.
+
+In this article, I want to unpack the transition from full-stack web engineering into AI engineering—not as a pivot into academic research, but as a natural evolution of systems engineering.
+
+## 1. Moving Beyond Prompt Engineering
+
+Many developers begin their AI journey with simple prompt engineering: formatting text strings and sending them to an external completion API. While prompt craft is an essential basic skill, it quickly reveals severe limitations in enterprise applications:
+
+- **Non-determinism:** The same prompt can produce subtly different outputs across model versions.
+- **Context window economics:** Shoveling megabytes of raw text into tokens is both computationally inefficient and expensive.
+- **Silent failure modes:** Hallucinations rarely throw HTTP 500 errors; they silently generate plausible falsehoods.
+
+To address these challenges, we need to treat AI interactions with the same rigor we apply to database queries, caching layers, and external payment gateways.
+
+## 2. The Core Pillars of AI Engineering
+
+When dissecting what makes an effective AI engineer, four pillars stand out:
+
+### A. Mathematical Foundations
+Understanding gradient descent, loss functions, and matrix multiplication is not just theoretical trivia. It provides the mental model required to understand why models behave the way they do, why vanishing gradients occur, and how attention mechanisms compute relevance.
+
+### B. Data Pipelines and Hygiene
+Before a single tensor is trained or a document is vectorized, data must be ingested, cleaned, normalized, and validated. Full stack engineers with solid database and serialization experience already have strong intuition for this: garbage in, garbage out.
+
+### C. Retrieval-Augmented Generation (RAG)
+Enterprise data changes continuously, making fine-tuning for factual retrieval impractical. A robust RAG pipeline requires:
+- High-fidelity document parsing.
+- Semantic chunking with overlap.
+- Hybrid retrieval (combining keyword BM25 with dense vector embeddings).
+- Re-ranking and strict citation attribution.
+
+### D. Observability and Evaluation
+In traditional web engineering, we write unit tests with assertions (`expect(result).toBe(true)`). In AI engineering, assertions are statistical. We must establish continuous evaluation harnesses that calculate semantic similarity, hallucination rates, and task completion metrics against representative ground-truth datasets.
+
+## 3. What Software Engineers Already Bring to the Table
+
+If you come from a backend or full stack background, you are not starting from scratch. You already possess the hardest-to-teach skills in applied AI:
+
+1. **System Architecture:** Designing distributed queues, decoupling services with Kafka, and caching with Redis.
+2. **API Design & Contracts:** Guaranteeing schema contracts using TypeScript, Pydantic, and OpenAPI.
+3. **Operational Discipline:** GitOps, CI/CD pipelines, containerization with Docker, and monitoring in production.
+
+As models become commoditized, the competitive advantage shifts to who can integrate them into dependable, maintainable, and cost-effective software systems.

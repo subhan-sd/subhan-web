@@ -1,0 +1,157 @@
+---
+import { navLinks } from '@/data/navigation';
+import { profile } from '@/data/profile';
+import ThemeToggle from '@/components/ui/ThemeToggle';
+import Button from '@/components/ui/Button.astro';
+import { GithubIcon, LinkedinIcon } from '@/components/ui/Icons';
+import { FileText, Menu, X } from 'lucide-react';
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-md transition-colors">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <!-- Brand / Monogram -->
+    <a href="/" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md">
+      <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 flex items-center justify-center font-mono font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
+        SK
+      </div>
+      <div class="flex flex-col">
+        <span class="font-semibold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          {profile.shortName}
+        </span>
+        <span class="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 hidden sm:inline">
+          Software Engineer
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400" aria-label="Main navigation">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-500 hover:after:w-full after:transition-all after:duration-200"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Desktop Actions -->
+    <div class="hidden sm:flex items-center gap-2.5">
+      <a
+        href={profile.contacts.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub Profile"
+        class="w-9 h-9 rounded-md flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors"
+      >
+        <GithubIcon className="w-4 h-4" />
+      </a>
+      <a
+        href={profile.contacts.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn Profile"
+        class="w-9 h-9 rounded-md flex items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors"
+      >
+        <LinkedinIcon className="w-4 h-4" />
+      </a>
+
+      <!-- Theme Switcher -->
+      <ThemeToggle client:load />
+
+      <!-- CV Download Button -->
+      <Button href={profile.cvUrl} variant="outline" size="sm" target="_blank" download="Subhan_Fadz_Kamil_Singandaru_CV.pdf">
+        <FileText className="w-3.5 h-3.5 text-zinc-500" />
+        <span>Resume</span>
+      </Button>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <div class="flex items-center gap-2 md:hidden">
+      <ThemeToggle client:load />
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+        class="w-9 h-9 rounded-md flex items-center justify-center border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+      >
+        <Menu id="menu-icon-open" className="w-5 h-5" />
+        <X id="menu-icon-close" className="w-5 h-5 hidden" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div
+    id="mobile-drawer"
+    class="hidden md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-4 py-6 space-y-4 animate-fade-in"
+  >
+    <div class="flex flex-col space-y-3 font-medium text-base text-zinc-700 dark:text-zinc-300">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-nav-link py-1.5 px-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-white transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a
+          href={profile.contacts.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors"
+          aria-label="GitHub"
+        >
+          <GithubIcon className="w-5 h-5" />
+        </a>
+        <a
+          href={profile.contacts.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors"
+          aria-label="LinkedIn"
+        >
+          <LinkedinIcon className="w-5 h-5" />
+        </a>
+      </div>
+
+      <Button href={profile.cvUrl} variant="primary" size="sm" target="_blank" download="Subhan_Fadz_Kamil_Singandaru_CV.pdf">
+        <FileText className="w-3.5 h-3.5" />
+        <span>Download Resume</span>
+      </Button>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const drawer = document.getElementById('mobile-drawer');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!isExpanded));
+      drawer.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        drawer.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,95 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { ShieldCheck, Layers, Cpu, GitBranch } from 'lucide-react';
+---
+
+<section id="about" class="py-20 border-t border-zinc-200 dark:border-zinc-800/80">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <SectionHeader
+      eyebrow="Background & Philosophy"
+      title="Engineering with Rigor, Driven by Continuous Evolution"
+      description="From building resilient platforms for Indonesia's state-owned enterprises to researching intelligent, production-ready AI systems."
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Left Column: Narrative (7 cols) -->
+      <div class="lg:col-span-7 space-y-5 text-zinc-700 dark:text-zinc-300 text-base leading-relaxed">
+        <p>
+          I am a Software Engineer based in Bogor, Indonesia, with a track record of designing, building, and operating high-scale digital solutions across heavily regulated industries—including holding conglomerates, general insurance, and micro-finance services.
+        </p>
+
+        <p>
+          Over the course of my career at <strong class="text-zinc-950 dark:text-white font-semibold">Indonesia Financial Group (IFG)</strong>, <strong class="text-zinc-950 dark:text-white font-semibold">PT Asuransi Jasa Indonesia</strong>, <strong class="text-zinc-950 dark:text-white font-semibold">PT Pegadaian</strong>, and foundational experience at <strong class="text-zinc-950 dark:text-white font-semibold">Telkom Indonesia</strong>, I have tackled core enterprise challenges: decoupling monolithic applications into event-driven services, tuning database query performance under peak load, and enforcing type safety across large frontend codebases.
+        </p>
+
+        <p>
+          My technical mindset is rooted in <em class="text-zinc-950 dark:text-white not-italic font-semibold">systems thinking and pragmatic discipline</em>. I prioritize maintainability over transient trends, robust test safety nets over rushed deployments, and clear API boundaries that enable squads to ship features safely and independently.
+        </p>
+
+        <div class="p-4 rounded-xl bg-purple-500/5 dark:bg-purple-950/20 border border-purple-500/20 space-y-2 mt-6">
+          <div class="flex items-center gap-2 text-xs font-mono font-semibold uppercase text-purple-700 dark:text-purple-400">
+            <Cpu className="w-4 h-4" />
+            <span>The AI Engineering Trajectory</span>
+          </div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 leading-normal">
+            As software engineering converges with artificial intelligence, I am expanding my capabilities into AI Engineering. Rather than viewing machine learning as opaque magic, I treat it as an extension of systems engineering: understanding mathematical fundamentals, architecting grounded retrieval pipelines (RAG), and designing deterministic guardrails for generative models.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Highlight Pillars & Quick Stats (5 cols) -->
+      <div class="lg:col-span-5 space-y-4">
+        <!-- Card 1 -->
+        <div class="p-5 rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-2.5 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+              <Layers className="w-4 h-4" />
+            </div>
+            <h3 class="font-semibold text-zinc-950 dark:text-zinc-100 text-sm">Full-Stack Architecture</h3>
+          </div>
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            End-to-end fluency from TypeScript component lifecycles in Next.js to modular NestJS microservices and Kafka event distribution.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-5 rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-2.5 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h3 class="font-semibold text-zinc-950 dark:text-zinc-100 text-sm">Enterprise Reliability</h3>
+          </div>
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            Experience building transactional insurance and financial systems requiring high uptime, data integrity, and strict audit logging.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-5 rounded-xl bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 space-y-2.5 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+              <GitBranch className="w-4 h-4" />
+            </div>
+            <h3 class="font-semibold text-zinc-950 dark:text-zinc-100 text-sm">Modern DevOps & GitOps</h3>
+          </div>
+          <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            Automating multi-environment delivery pipelines with Argo CD, Jenkins, Docker, and Cloudflare edge networks.
+          </p>
+        </div>
+
+        <!-- Career Summary Numbers -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="p-4 rounded-xl bg-zinc-100/80 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80">
+            <div class="font-mono text-2xl font-bold text-zinc-950 dark:text-zinc-100">4</div>
+            <div class="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">BUMN / Enterprise Organizations</div>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-100/80 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80">
+            <div class="font-mono text-2xl font-bold text-blue-600 dark:text-blue-400">100%</div>
+            <div class="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Type-Safe & Scalable Standards</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

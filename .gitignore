@@ -1,0 +1,19 @@
+# Build & runtime artifacts
+dist/
+.astro/
+.wrangler/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs & temp
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db

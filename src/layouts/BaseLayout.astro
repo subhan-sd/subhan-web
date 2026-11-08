@@ -1,0 +1,119 @@
+---
+import ThemeScript from '@/components/layout/ThemeScript.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { profile } from '@/data/profile';
+import '@/styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  articleMeta?: {
+    publishDate: Date;
+    author: string;
+    tags: string[];
+  };
+}
+
+const {
+  title = `${profile.name} — Software Engineer & AI Engineering Enthusiast`,
+  description = profile.positioning,
+  ogImage = '/og-image.png',
+  canonicalUrl = Astro.url.href,
+  articleMeta,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() || 'https://subhan.dev';
+
+// JSON-LD Person schema
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": profile.name,
+  "alternateName": profile.shortName,
+  "jobTitle": "Software Engineer",
+  "description": profile.positioning,
+  "url": siteUrl,
+  "image": profile.avatarUrl,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bogor",
+    "addressCountry": "ID"
+  },
+  "sameAs": [
+    profile.contacts.github,
+    profile.contacts.linkedin
+  ],
+  "knowsAbout": [
+    "Software Engineering",
+    "Full Stack Web Development",
+    "React.js",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "NestJS",
+    "Apache Kafka",
+    "PostgreSQL",
+    "Docker",
+    "Argo CD",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "PyTorch",
+    "LLM Engineering",
+    "Retrieval-Augmented Generation"
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Anti-FOUC Theme Init -->
+    <ThemeScript />
+
+    <!-- SEO Primary -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={articleMeta ? "article" : "website"} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, siteUrl).toString()} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(ogImage, siteUrl).toString()} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    <!-- Fonts (Geist Sans & Mono from Google/Vercel CDN fallback) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 min-h-screen flex flex-col selection:bg-blue-500/20 selection:text-blue-500">
+    <Header />
+    <main class="flex-1 w-full" id="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,102 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { aiJourney } from '@/data/ai-journey';
+import { Sparkles } from 'lucide-react';
+---
+
+<section id="ai-journey" class="py-20 border-t border-zinc-200 dark:border-zinc-800/80 relative overflow-hidden">
+  <!-- Subtle ambient purple gradient -->
+  <div class="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[400px] bg-purple-500/5 dark:bg-purple-900/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative">
+    <SectionHeader
+      eyebrow="Evolutionary Roadmap"
+      title={aiJourney.title}
+      description={aiJourney.subtitle}
+    />
+
+    <!-- Engineering Philosophy Quote Box -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-purple-500/10 via-indigo-500/5 to-transparent border border-purple-500/20 mb-12 space-y-2">
+      <div class="flex items-center gap-2 text-xs font-mono font-semibold uppercase text-purple-700 dark:text-purple-400">
+        <Sparkles className="w-4 h-4" />
+        <span>Engineering Philosophy</span>
+      </div>
+      <p class="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed italic">
+        "{aiJourney.philosophy}"
+      </p>
+    </div>
+
+    <!-- 8 Pillars Timeline Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {aiJourney.milestones.map((milestone) => (
+        <div class="p-6 rounded-2xl bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80 shadow-sm hover:shadow-md hover:border-purple-500/30 dark:hover:border-purple-500/30 transition-all duration-300 flex flex-col justify-between space-y-4 group">
+          
+          <div class="space-y-3">
+            <!-- Order Number & Status -->
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono text-xs font-bold text-zinc-400 dark:text-zinc-500 group-hover:text-purple-500 transition-colors">
+                PILLAR {String(milestone.order).padStart(2, '0')}
+              </span>
+              <span class={`px-2.5 py-0.5 rounded-full text-[11px] font-mono border font-medium ${
+                milestone.status === 'completed'
+                  ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20'
+                  : milestone.status === 'in_progress'
+                  ? 'bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20'
+                  : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700'
+              }`}>
+                {milestone.statusLabel}
+              </span>
+            </div>
+
+            <!-- Title & Tagline -->
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-zinc-950 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                {milestone.title}
+              </h3>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                {milestone.tagline}
+              </p>
+            </div>
+
+            <!-- Description -->
+            <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              {milestone.description}
+            </p>
+
+            <!-- Covered Topics -->
+            <div class="space-y-1.5 pt-1">
+              <span class="font-mono text-[11px] font-semibold uppercase text-zinc-500 dark:text-zinc-400">
+                Core Competencies:
+              </span>
+              <ul class="space-y-1">
+                {milestone.topics.map((topic) => (
+                  <li class="flex items-start gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0 mt-1.5"></span>
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Bottom: Key Implementations -->
+          <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800/60 space-y-1 text-xs">
+            <span class="font-mono text-[11px] font-semibold uppercase text-purple-700 dark:text-purple-400">
+              Applied Focus:
+            </span>
+            <ul class="space-y-1">
+              {milestone.keyImplementations.map((impl) => (
+                <li class="text-[11px] text-zinc-500 dark:text-zinc-400 flex items-start gap-1.5">
+                  <span class="text-purple-500 font-mono">↳</span>
+                  <span>{impl}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

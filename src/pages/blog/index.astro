@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import BlogSearch from '@/components/blog/BlogSearch';
+import { getCollection } from 'astro:content';
+import { profile } from '@/data/profile';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+const sortedPosts = allPosts
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .map((p) => ({
+    slug: p.slug,
+    title: p.data.title,
+    description: p.data.description,
+    publishDate: p.data.publishDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    category: p.data.category,
+    tags: p.data.tags,
+    readingTime: p.data.readingTime,
+  }));
+
+const categories = Array.from(new Set(allPosts.map((p) => p.data.category)));
+---
+
+<BaseLayout
+  title={`Technical Writing & Engineering Notes — ${profile.shortName}`}
+  description="In-depth technical essays on distributed backend architectures, frontend engineering, and transitioning into AI engineering."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+    <SectionHeader
+      eyebrow="Knowledge Base & Notes"
+      title="Technical Writing"
+      description="Architectural deep dives, real-world distributed systems lessons, and practical steps transitioning from full-stack software development into AI engineering."
+    />
+
+    <!-- Interactive Search and Filter Island -->
+    <BlogSearch client:load posts={sortedPosts} categories={categories} />
+  </div>
+</BaseLayout>

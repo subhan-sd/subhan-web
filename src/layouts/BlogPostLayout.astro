@@ -1,0 +1,150 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { profile } from '@/data/profile';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, publishDate, updatedDate, category, tags, readingTime, author } = post.data;
+
+const canonicalUrl = new URL(`/blog/${post.slug}`, Astro.site || 'https://subhan.dev').toString();
+
+// JSON-LD BlogPosting Schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "datePublished": publishDate.toISOString(),
+  "dateModified": (updatedDate || publishDate).toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": author,
+    "url": profile.contacts.github
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": profile.name
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonicalUrl
+  }
+};
+---
+
+<BaseLayout
+  title={`${title} — ${profile.shortName}`}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  articleMeta={{
+    publishDate,
+    author,
+    tags,
+  }}
+>
+  <!-- Schema.org BlogPosting -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <!-- Back to Blog Link -->
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-zinc-950 dark:hover:text-white transition-colors mb-8 group"
+    >
+      <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+      <span>Back to Technical Writing</span>
+    </a>
+
+    <!-- Header Section -->
+    <header class="space-y-4 pb-8 border-b border-zinc-200 dark:border-zinc-800">
+      <!-- Category & Reading time -->
+      <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+        <span class="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20 font-medium">
+          {category}
+        </span>
+        <div class="flex items-center gap-1.5">
+          <Calendar className="w-3.5 h-3.5" />
+          <time datetime={publishDate.toISOString()}>
+            {publishDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </time>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <Clock className="w-3.5 h-3.5" />
+          <span>{readingTime}</span>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.15]">
+        {title}
+      </h1>
+
+      <!-- Description / Lead -->
+      <p class="text-lg sm:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed">
+        {description}
+      </p>
+
+      <!-- Author Card Row -->
+      <div class="pt-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <img
+            src={profile.avatarUrl}
+            alt={author}
+            class="w-10 h-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-700"
+            width="40"
+            height="40"
+          />
+          <div>
+            <div class="font-semibold text-sm text-zinc-900 dark:text-zinc-100">{author}</div>
+            <div class="text-xs font-mono text-zinc-500">Software Engineer @ IFG</div>
+          </div>
+        </div>
+
+        <!-- Tags row -->
+        <div class="hidden sm:flex flex-wrap items-center gap-1.5">
+          {tags.map((tag) => (
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/60">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <div class="py-10 prose prose-zinc dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-pre:border prose-pre:border-zinc-200 dark:prose-pre:border-zinc-800 prose-code:font-mono prose-code:text-xs leading-relaxed">
+      <slot />
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="pt-8 mt-12 border-t border-zinc-200 dark:border-zinc-800 space-y-6">
+      <div class="p-6 rounded-2xl bg-zinc-100/70 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <h4 class="font-bold text-sm text-zinc-900 dark:text-zinc-100">Enjoyed this perspective?</h4>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400">Feel free to connect or share feedback on architecture and AI systems.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href={profile.contacts.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 hover:opacity-90 transition-opacity"
+          >
+            Connect on LinkedIn
+          </a>
+          <a
+            href="/blog"
+            class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+          >
+            All Articles
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>
